@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import CountryDetails from './CountryDetails';
+import React from 'react';
 
 const DetailButton = ({setShowDetails, setCountryToShowDetails}) => {
     const showCountryDetails = () => {

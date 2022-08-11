@@ -1,33 +1,29 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Filter from './components/Filter';
 import CountryList from './components/CountryList';
 
-
-
 const App = () => {
-  const [countries, setCountries] = useState([]);
-  const [listToShow, setListToShow] = useState([]);
+    const [countries, setCountries] = useState([]);
+    const [listToShow, setListToShow] = useState([]);
 
-  useEffect(() => {
-    axios.get('https://restcountries.com/v3.1/all')
-      .then(response => {
-        console.log(response.data);
-        setCountries(response.data);
-        setListToShow(response.data);
-      })
-  }, []);
+    useEffect(() => {
+        axios.get('https://restcountries.com/v3.1/all').then((response) => {
+            console.log(response.data);
+            setCountries(response.data);
+            setListToShow(response.data);
+        });
+    }, []);
 
-  return (
-    <div>
-      <h2>Phonebook</h2>
-      <Filter countries={countries} setListToShow={setListToShow} />
-      <p>{listToShow.length}</p>
-      
-      <CountryList countries={countries} listToShow={listToShow} />
-      
-      </div>
-  )
-}
+    return (
+        <div>
+            <h2>Country data</h2>
+            <Filter countries={countries} setListToShow={setListToShow} />
+            <p>{listToShow.length}</p>
 
-export default App
+            <CountryList countries={countries} listToShow={listToShow} />
+        </div>
+    );
+};
+
+export default App;
