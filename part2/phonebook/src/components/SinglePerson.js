@@ -4,7 +4,7 @@ const SinglePerson = ({ person, persons, setPersons }) => {
 	const [personDeleted, setPersonDeleted] = useState(false);
 
 	const handleDeletePerson = () => {
-		if (window.confirm(`Delete ${person.name}`)) {
+		if (window.confirm(`Delete ${person.name}?`)) {
 			serverCalls.remove(person.id).then((response) => {
 				console.log("removed person", person.id);
 				setPersons(persons.filter((p) => p.id !== person.id));

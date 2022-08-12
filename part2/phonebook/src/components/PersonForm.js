@@ -12,12 +12,32 @@ const PersonForm = ({ persons, setPersons, setListToShow }) => {
 			number: newNumber,
 			id: persons.length + 1,
 		};
-		if (!persons.find((e) => e.name === newPerson.name)) {
+
+		const existingPerson = persons.find((e) => e.name === newPerson.name);
+
+		if (existingPerson) {
+			if (
+				window.confirm(
+					`${existingPerson.name} is already added to phonebook, replace the old number with a new one?`
+				)
+			) {
+				const changedPerson = { ...existingPerson, number: newNumber };
+				serverCalls
+					.update(changedPerson.id, changedPerson)
+					.then((response) => {
+						setPersons(
+							persons.map((p) =>
+								p.id !== changedPerson.id ? p : response
+							)
+						);
+					});
+			} else {
+				alert(`${newPerson.name} is already added to phonebook`);
+			}
+		} else {
 			serverCalls.create(newPerson).then((returnedPerson) => {
 				setPersons(persons.concat(returnedPerson));
 			});
-		} else {
-			alert(`${newPerson.name} is already added to phonebook`);
 		}
 		setNewName("");
 		setNewNumber("");
