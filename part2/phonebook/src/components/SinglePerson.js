@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import serverCalls from "../services/serverCalls";
-const SinglePerson = ({ person, persons, setPersons }) => {
+const SinglePerson = ({
+	person,
+	persons,
+	setPersons,
+	setDeleteSucceeded,
+	setMessage,
+	setAddSucceeded,
+}) => {
 	const [personDeleted, setPersonDeleted] = useState(false);
 
 	const handleDeletePerson = () => {
@@ -10,6 +17,11 @@ const SinglePerson = ({ person, persons, setPersons }) => {
 				setPersons(persons.filter((p) => p.id !== person.id));
 				console.log("person List", persons);
 				setPersonDeleted(true);
+				setDeleteSucceeded(true);
+				setAddSucceeded(false);
+				setMessage(
+					`Information of ${person.name} has already been removed from the server`
+				);
 			});
 		}
 	};

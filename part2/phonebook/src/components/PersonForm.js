@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import serverCalls from "../services/serverCalls";
 
-const PersonForm = ({ persons, setPersons, setListToShow }) => {
+const PersonForm = ({
+	persons,
+	setPersons,
+	setListToShow,
+	setAddSucceeded,
+	setMessage,
+	setDeleteSucceeded,
+}) => {
 	const [newName, setNewName] = useState("");
 	const [newNumber, setNewNumber] = useState("");
 
@@ -30,6 +37,9 @@ const PersonForm = ({ persons, setPersons, setListToShow }) => {
 								p.id !== changedPerson.id ? p : response
 							)
 						);
+						setAddSucceeded(true);
+						setDeleteSucceeded(false);
+						setMessage(`Updated ${changedPerson.name}`);
 					});
 			} else {
 				alert(`${newPerson.name} is already added to phonebook`);
@@ -37,6 +47,9 @@ const PersonForm = ({ persons, setPersons, setListToShow }) => {
 		} else {
 			serverCalls.create(newPerson).then((returnedPerson) => {
 				setPersons(persons.concat(returnedPerson));
+				setAddSucceeded(true);
+				setDeleteSucceeded(false);
+				setMessage(`Added ${returnedPerson.name}`);
 			});
 		}
 		setNewName("");
